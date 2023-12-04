@@ -25,6 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware(['auth', 'role:responsable'])->prefix('/responsable')->group(function () {
+    Route::resource('roles' , \App\Http\Controllers\RoleController::class);
     Route::get('/dashboard', [ResponsableController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/Employelist', [ResponsableController::class, 'getUsers'])->name('employe.list');
 
