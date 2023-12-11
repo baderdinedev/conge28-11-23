@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmployeeLoginController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -53,8 +54,16 @@ Route::middleware(['auth', 'role:responsable'])->prefix('/responsable')->group(f
     Route::get('/roles/{id}', [RoleController::class, 'edit'])->name('roles.update');
     Route::delete('/roles/{id}', [RoleController::class, 'destory'])->name('roles.destroy');
 
+    Route::get('/leaveRequest/list', [LeaveRequestController::class, 'index'])->name('leave-requests.list');
+    Route::post('/leave-request/{id}/approve', [LeaveRequestController::class, 'approveLeave'])->name('leave-request.approve');
+    Route::post('/leave-request/{id}/reject', [LeaveRequestController::class, 'rejectLeave'])->name('leave-request.reject');
+
+
 });
 
 Route::middleware(['auth', 'role:employe'])->prefix('/employe')->group(function () {
     Route::get('/dashboard', [EmployeController::class, 'index'])->name('dashboard');
+    Route::get('/leaveRequest', [LeaveRequestController::class, 'create'])->name('leaveRequestForm');
+    Route::post('/leaveRequest/store', [LeaveRequestController::class, 'store'])->name('leave-requests.store');
+    Route::get('/leaveRequest/{id}', [EmployeController::class, 'show'])->name('leave-request.show');
 });

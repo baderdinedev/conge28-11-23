@@ -33,7 +33,8 @@
 <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
             <ul>
                 <li><a href="{{route('roles')}}">Gestion des Roles</a></li>
-                <li><a href="{{route('employe.list')}}">Gestion des Employe</a></li>
+                <li><a href="{{route('employe.list')}}">Gestion des Employe</a></li>  
+                <li><a href="{{route('leave-requests.list')}}">Leave Requests</a></li>
             </ul>
         </div>
 

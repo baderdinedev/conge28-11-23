@@ -32,8 +32,7 @@
 
 <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
             <ul>
-                <li><a href="">Demande Conge</a></li>
-                <li><a href="">Demande autorisations</a></li>
+                <li><a href="{{route('leaveRequestForm')}}">Demande Conge</a></li>
             </ul>
         </div>
 
