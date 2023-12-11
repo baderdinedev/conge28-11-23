@@ -17,6 +17,11 @@ class CheckRole
     public function handle($request, Closure $next, $role)
     {
         $user = Auth::user();
+        $guard = 'web';
+
+        if ($role === 'employee') {
+            $guard = 'employee'; // Use the 'employee' guard for employee roles
+        }
 
         if ($user && $user->role->name == $role) {
             return $next($request);

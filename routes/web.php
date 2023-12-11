@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\EmployeeLoginController;
+use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['guest'])->group(function () {
+    Route::get('/employee/login', [EmployeeLoginController::class, 'showLoginForm'])->name('employee.login');
+    Route::post('/employee/login', [EmployeeLoginController::class, 'login']);
+});
+
 Auth::routes();
 
 
@@ -28,11 +35,26 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth', 'role:responsable'])->prefix('/responsable')->group(function () {
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::get('/dashboard', [ResponsableController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/Employelist', [ResponsableController::class, 'getUsers'])->name('employe.list');
-    Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
+
+    Route::get('/Employelist', [ResponsableController::class, 'getUsers'])->name('employe.list');
+    Route::get('/EmployeCreate', [ResponsableController::class, 'create'])->name('employe.create');
+    Route::post('/EmployeCreate/store', [ResponsableController::class, 'store'])->name('employe.store');
+    Route::get('/EmployeShow/{id}', [ResponsableController::class, 'show'])->name('employe.show');
+    Route::get('/EmployeShow/{id}/edit', [ResponsableController::class, 'edit'])->name('employe.edit');
+    Route::put('/Employe/{id}', [ResponsableController::class, 'update'])->name('employe.update');
+    Route::delete('/Employe/{id}', [ResponsableController::class, 'destroy'])->name('employe.destory');
+
+    // Roles CRUD
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
     Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
     Route::post('roles/store', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('roles/edit', [RoleController::class, 'show'])->name('roles.edit');
-    Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::get('/roles/{id}', [RoleController::class, 'show'])->name('roles.show');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::get('/roles/{id}', [RoleController::class, 'edit'])->name('roles.update');
+    Route::delete('/roles/{id}', [RoleController::class, 'destory'])->name('roles.destroy');
 
+});
+
+Route::middleware(['auth', 'role:employe'])->prefix('/employe')->group(function () {
+    Route::get('/dashboard', [EmployeController::class, 'index'])->name('dashboard');
 });

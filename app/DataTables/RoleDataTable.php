@@ -26,6 +26,7 @@ class RoleDataTable extends DataTable
             ->setRowId('id');
     }
 
+
     /**
      * Get the query source of dataTable.
      */
