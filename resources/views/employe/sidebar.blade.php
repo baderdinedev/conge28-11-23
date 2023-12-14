@@ -29,13 +29,12 @@
 }
 
 </style>
-
 <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
             <ul>
                 <li><a href="{{route('leaveRequestForm')}}">Demande Conge</a></li>
+                <li><a href="{{route('leaveRequests.list')}}">Leave Requests List</a></li>
             </ul>
         </div>
-
 <div id="sidebarToggle">☰</div>
 
 

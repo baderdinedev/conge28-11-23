@@ -36,8 +36,6 @@ class LoginController extends Controller
             return '/employe/dashboard';
         } elseif ($user->role->name === 'responsable') {
             return '/responsable/dashboard';
-        } else {
-            return '/home';
         }
     }
 

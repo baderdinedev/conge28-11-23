@@ -6,13 +6,16 @@ use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Datatables;
 
 class ResponsableController extends Controller
 {
     public function index()
     {
-        return view('responsable.dashboard');
+        $user = Auth::user();
+        return view('responsable.dashboard', compact('user'));
     }
 
     public function getUsers(UsersDataTable $usersDataTable)

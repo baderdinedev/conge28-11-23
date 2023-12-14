@@ -20,7 +20,7 @@ class CheckRole
         $guard = 'web';
 
         if ($role === 'employee') {
-            $guard = 'employee'; // Use the 'employee' guard for employee roles
+            $guard = 'employee';
         }
 
         if ($user && $user->role->name == $role) {

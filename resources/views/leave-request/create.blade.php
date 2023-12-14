@@ -2,11 +2,17 @@
 
 @section('content')
 <div class="container">
-    
     <div class="row justify-content-center">
         <div class="col-md-8">
              <div class="container">
         <h2>New Leave Request</h2>
+        @if($leavsReq == 1 )
+            <div class="alert alert-warning">
+                You can't Add a new Leave Request Now !
+                check your last Leave Request if you wan to update click here
+                <a href="{{route('leaveRequests.list')}}">Leave Requests</a>
+            </div>        
+        @else
         <form method="post" action="{{ route('leave-requests.store') }}">
             @csrf
             <div class="form-group">
@@ -30,6 +36,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        @endif
     </div>  
         </div>
     </div>

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Auth\EmployeeLoginController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\EmployeLeaveRequestController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ResponsableController;
+use App\Http\Controllers\ResponsableInformationController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +47,12 @@ Route::middleware(['auth', 'role:responsable'])->prefix('/responsable')->group(f
     Route::put('/Employe/{id}', [ResponsableController::class, 'update'])->name('employe.update');
     Route::delete('/Employe/{id}', [ResponsableController::class, 'destroy'])->name('employe.destory');
 
+
+    // Responsable update info
+    Route::get('/info/{id}/edit', [ResponsableInformationController::class, 'edit'])->name('responsableInfo.edit');
+    Route::put('/info/{id}', [ResponsableInformationController::class, 'update'])->name('responsableInfo.update');
+
+
     // Roles CRUD
     Route::get('/roles', [RoleController::class, 'index'])->name('roles');
     Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
@@ -54,16 +62,29 @@ Route::middleware(['auth', 'role:responsable'])->prefix('/responsable')->group(f
     Route::get('/roles/{id}', [RoleController::class, 'edit'])->name('roles.update');
     Route::delete('/roles/{id}', [RoleController::class, 'destory'])->name('roles.destroy');
 
-    Route::get('/leaveRequest/list', [LeaveRequestController::class, 'index'])->name('leave-requests.list');
+    // Leave Requests 
+    Route::get('/leaveRequest/list', [LeaveRequestController::class, 'getLeaveRequests'])->name('leave-requests.list');
     Route::post('/leave-request/{id}/approve', [LeaveRequestController::class, 'approveLeave'])->name('leave-request.approve');
     Route::post('/leave-request/{id}/reject', [LeaveRequestController::class, 'rejectLeave'])->name('leave-request.reject');
 
 
 });
 
+// getLeaveRequests
+
 Route::middleware(['auth', 'role:employe'])->prefix('/employe')->group(function () {
     Route::get('/dashboard', [EmployeController::class, 'index'])->name('dashboard');
+
+    Route::get('/leave-request/list', [EmployeController::class, 'getLeaveRequests'])->name('leaveRequests.list');
+
     Route::get('/leaveRequest', [LeaveRequestController::class, 'create'])->name('leaveRequestForm');
     Route::post('/leaveRequest/store', [LeaveRequestController::class, 'store'])->name('leave-requests.store');
+
     Route::get('/leaveRequest/{id}', [EmployeController::class, 'show'])->name('leave-request.show');
+    Route::get('/leaveRequest/{id}/edit', [EmployeLeaveRequestController::class, 'edit'])->name('leave-request.edit');
+    Route::put('/leaveRequest/{id}', [EmployeLeaveRequestController::class, 'update'])->name('leave-request.update');
+    Route::delete('/leaveRequest/{id}', [EmployeLeaveRequestController::class, 'destory'])->name('leave-request.destory');
+
+    Route::get('/info/{id}/edit', [EmployeController::class, 'edit'])->name('employeInfo.edit');
+    Route::put('/info/{id}', [EmployeController::class, 'update'])->name('employeInfo.update');
 });
